@@ -1,54 +1,128 @@
 # 🤖 AI Email Classifier
 
-Clasificador inteligente de correos electrónicos basado en IA semántica, capaz de analizar emails y PDFs, generar resúmenes automáticos y mantener un historial exportable. Ideal como MVP para productividad y soporte técnico.
+Clasificador inteligente de correos electrónicos basado en Inteligencia Artificial que combina procesamiento semántico del lenguaje (NLP), análisis de documentos y heurísticas inteligentes para clasificar emails, generar resúmenes automáticos, detectar posibles intentos de phishing y priorizar los mensajes según su nivel de urgencia.
 
-## 📧 Categorías Detectadas
+La aplicación utiliza modelos de **Transformers**, **Sentence Transformers**, **Gradio** y una base de datos **SQLite** para ofrecer una solución completa para la gestión inteligente de correos electrónicos.
 
-- 🔴 Urgente — requiere acción inmediata
+---
 
-- 🟡 Importante pero no urgente — revisión posterior
+# 📧 Categorías Detectadas
 
-- 📄 Informativo — solo lectura
+- 🔴 **Urgente** — requiere acción inmediata.
+- 🟡 **Importante pero no urgente** — necesita revisión posterior.
+- 📄 **Informativo** — solo requiere lectura.
+- 🚫 **Spam / Promoción** — publicidad o contenido promocional.
 
-- 🚫 Spam / Promoción — marketing o publicidad
+---
 
-## ✨ Funcionalidades
+# ✨ Funcionalidades
 
-- 🧠 Clasificación Semántica: analiza el significado completo usando embeddings multilingües.
+## 🧠 Clasificación Semántica
 
-- 🔍 Keyword Boost: detecta palabras críticas y evalúa negaciones contextuales.
+Analiza el significado completo del correo utilizando embeddings multilingües, evitando depender únicamente de palabras clave.
 
-- 🌍 Detección de idioma automática (multilingüe).
+---
 
-- 📝 Resumen Automático del contenido del email + PDF adjunto.
+## 📊 Score de Urgencia (0–100)
 
-- 📎 Análisis de PDFs: extracción y clasificación del texto adjunto.
+Cada correo recibe una puntuación de urgencia calculada a partir de:
 
-- 📊 Historial Inteligente (últimos 10 emails) con exportación CSV/JSON.
+- clasificación semántica
+- confianza del modelo
+- palabras clave de urgencia
+- fechas límite detectadas
+- categoría asignada
 
-- 🎨 Interfaz Web con Gradio: análisis en un clic y visualización clara.
+Esto permite priorizar automáticamente los correos más importantes.
 
-## 🧱 Stack Tecnológico
+---
 
-- Python 3.10+
+## 🛡️ Detección de Spam y Phishing
 
-- Transformers (Hugging Face)
+El sistema incorpora diversas heurísticas para detectar posibles intentos de phishing, incluyendo:
 
-- Sentence Transformers
+- frases sospechosas habituales
+- enlaces acortados
+- uso excesivo de mayúsculas
+- exceso de signos de exclamación
+- diferencias entre el dominio del remitente y el de los enlaces
 
-- Gradio
+Las alertas detectadas se muestran junto al análisis.
 
-- PyPDF2
+---
 
-- langdetect
+## 🌍 Detección Automática de Idioma
 
-- Modelos NLP
+Detecta automáticamente el idioma predominante del correo, incluso cuando el contenido mezcla varios idiomas.
 
-  - Summarization pipeline
-  
-  - paraphrase-multilingual-MiniLM-L12-v2 (embeddings semánticos)
+---
 
-## ⚙️ Instalación
+## 📝 Resumen Automático mediante IA
+
+Genera un resumen automático utilizando modelos de Hugging Face Transformers.
+
+El resumen considera tanto el contenido del correo como el de los archivos adjuntos.
+
+---
+
+## 📎 Análisis de Adjuntos
+
+Permite analizar varios archivos simultáneamente.
+
+Formatos compatibles:
+
+- PDF
+- DOCX
+- TXT
+
+El contenido extraído se incorpora automáticamente al análisis.
+
+---
+
+## 🗄️ Historial Inteligente
+
+Cada análisis se almacena automáticamente en una base de datos SQLite.
+
+Se conserva información como:
+
+- fecha
+- idioma
+- categoría
+- score de urgencia
+- resumen
+- explicación
+- indicadores de phishing
+- existencia de adjuntos
+
+---
+
+## 📥 Exportación
+
+El historial puede exportarse en:
+
+- CSV
+- JSON
+- Excel (.xlsx)
+
+---
+
+## 🎨 Interfaz Web
+
+Aplicación desarrollada con **Gradio** que permite:
+
+- pegar el contenido del email
+- subir múltiples archivos
+- visualizar el progreso del análisis
+- consultar el historial
+- borrar el historial
+- limpiar los campos
+- descargar las exportaciones
+
+---
+
+# ⚙️ Instalación
+
+```bash
 git clone https://github.com/Kevin-2099/ai-email-classifier.git
 
 cd ai-email-classifier
@@ -56,52 +130,42 @@ cd ai-email-classifier
 pip install -r requirements.txt
 
 python app.py
+```
 
-Se abrirá automáticamente la interfaz web.
+La interfaz web se abrirá automáticamente en el navegador.
 
-## 🚀 Uso
+---
 
-- Pegue el email.
+# 🚀 Uso
 
-- (Opcional) Suba un PDF.
+1. Pegue el contenido del correo electrónico.
+2. (Opcional) Suba uno o varios archivos adjuntos.
+3. Pulse **Analizar Email**.
 
-- Pulse Analizar Email.
+El sistema mostrará:
 
-- Se mostrará:
+- idioma detectado
+- categoría asignada
+- score de urgencia
+- resumen automático
+- explicación de la clasificación
+- indicadores de spam o phishing (si existen)
 
-  - Idioma detectado
-  
-  - Categoría
-  
-  - Resumen automático
-  
-  - Explicación de la clasificación
+---
 
-## 🧠 Cómo Funciona
+# 🎯 Casos de Uso
 
-- Combina texto del email + PDF
+- Gestión inteligente de bandejas de entrada.
+- Helpdesk y soporte técnico.
+- Priorización automática de correos.
+- Automatización de procesos empresariales.
+- Asistentes personales basados en IA.
+- Clasificación documental.
+- Organización automática de comunicaciones internas.
 
-- Detecta idioma automáticamente
+---
 
-- Clasificación semántica con embeddings
-
-- Ajuste mediante keywords y negaciones
-
-- Generación de resumen
-
-- Guardado automático en historial
-
-## 🎯 Casos de Uso
-
-- Automatización de bandeja de entrada
-
-- Helpdesk y soporte técnico
-
-- Priorización automática de emails
-
-- Asistentes AI personales
-
-## 📄 Licencia
+# 📄 Licencia
 
 Este proyecto se distribuye bajo una **licencia propietaria con acceso al código (source-available)**.
 
@@ -115,5 +179,7 @@ El código fuente se pone a disposición únicamente para fines de **visualizaci
 
 Se proporciona una traducción al español en `LICENSE_ES.md` únicamente con fines informativos. En caso de discrepancia, prevalece la versión en inglés.
 
-## Autor
+---
+
+# Autor
 Kevin-2099
